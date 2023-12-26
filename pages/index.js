@@ -57,31 +57,31 @@ export default function Home() {
 
   return (
     <div className="Home">
-      <h1>クラシック作曲家の時代検索</h1>
+      <h1 className='text-lg mt-2 mx-2 font-medium'>クラシック作曲家の時代別検索</h1>
 
       { }
       <div>
-        <h2>時代区分(era)</h2>
-        <button onClick={() => selectera("all")}>All</button>
+        <h2 className='my-2 mx-2'>時代区分(era)</h2>
+        <button className='border-2 rounded px-2 py-1 mx-2 hover:bg-blue-200 border-red-400' onClick={() => selectera("all")}>All</button>
         {eras.map((era) => (
-          <button onClick={() => selectera(era)}>{era}</button>
+          <button className='border-2 rounded px-2 py-1 mx-1 hover:bg-blue-200 border-teal-400' onClick={() => selectera(era)}>{era}</button>
         ))}
       </div>
 
       { }
       <div>
-        <h4>Search</h4>
-        <input type="text" value={inputValue} onChange={handleInputChange} />
+        <h4 className='my-2 mx-2'>Search</h4>
+        <input className='mx-2 mb-2' type="text" value={inputValue} onChange={handleInputChange} />
       </div>
 
       { }
       {showmasterArtist.map((artist, index) => {
         return (
-          <div key={artist.name}>
+          <div className='mx-2 my-1' key={artist.name}>
             <p>
               {index + 1}. {artist.name}
             </p>
-            <p>era : {artist.era}</p>
+            <p className='mx-4'>era : {artist.era}</p>
           </div>
         );
       })}
