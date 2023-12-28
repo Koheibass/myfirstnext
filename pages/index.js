@@ -64,7 +64,7 @@ export default function Home() {
         <h2 className='my-2 mx-2'>時代区分(era)</h2>
         <button className='border-2 rounded px-2 py-1 mx-2 hover:bg-blue-200 border-red-400' onClick={() => selectera("all")}>All</button>
         {eras.map((era) => (
-          <button className='border-2 rounded px-2 py-1 mx-1 hover:bg-blue-200 border-teal-400' onClick={() => selectera(era)}>{era}</button>
+          <button key={era} className='border-2 rounded px-2 py-1 mx-1 hover:bg-blue-200 border-teal-400' onClick={() => selectera(era)}>{era}</button>
         ))}
       </div>
 
