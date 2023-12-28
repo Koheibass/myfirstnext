@@ -1,34 +1,25 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import { HelloWorld } from '../components/HelloWorld'
-import { Link } from 'next/link'
 import React from 'react'
 import { useState } from "react"
 
 export default function Home() {
-  const masterArtist = [
-    { name: 'バッハ', era: 'Baroque' },
-    { name: 'ヴィヴァルディ', era: 'Baroque' },
-    { name: 'ヘンデル', era: 'Baroque' },
-    { name: 'ベートーベン', era: 'Classical' },
-    { name: 'モーツァルト', era: 'Classical' },
-    { name: 'ショパン', era: 'Romantic' },
-    { name: 'リスト', era: 'Romantic' },
-    { name: 'シューベルト', era: 'Classical' },
-  ];
-
-  const [showMasterArtist, setMasterArtist] = React.useState(masterArtist);
+  const [masterArtist, setMasterArtist] = React.useState([]);
   const [inputValue, setInputValue] = useState();
+  const eras = ['all', ...Array.from(new Set(masterArtist.map((artist) => artist.era)))];
 
-  const eras = Array.from(new Set(masterArtist.map((artist) => artist.era)));
+  React.useEffect(() => {
+    const initMasterArtist = async () => {
+      const response = await fetch('/api/hello')
+      if (response.ok) {
+        const json = await response.json()
+        setMasterArtist(json)
+      }
+    }
+    initMasterArtist()
+  }, [])
 
   const selectEra = (era) => {
-    if (era === "all") {
-      setMasterArtist(masterArtist);
-    } else {
-      const selectedMasterArtist = masterArtist.filter((artist) => artist.era === era);
-      setMasterArtist(selectedMasterArtist);
-    }
+    const selectedMasterArtist = era === 'all' ? masterArtist : masterArtist.filter((artist) => artist.era === era);
+    setMasterArtist(selectedMasterArtist);
   };
 
   const search = (value) => {
@@ -61,9 +52,8 @@ export default function Home() {
 
       <div>
         <h2 className='my-2 mx-2'>時代区分(era)</h2>
-        <button className='border-2 rounded px-2 py-1 mx-2 hover:bg-blue-200 border-red-400' onClick={() => selectEra("all")}>All</button>
         {eras.map((era) => (
-          <button key={era} className='border-2 rounded px-2 py-1 mx-1 hover:bg-blue-200 border-teal-400' onClick={() => selectEra(era)}>{era}</button>
+          <button key={era} className={`capitalize border-2 rounded px-2 py-1 mx-1 hover:bg-blue-200 ${era === 'all' ? 'border-red-400' : 'border-teal-400'}`} onClick={() => selectEra(era)}>{era}</button>
         ))}
       </div>
 
@@ -72,7 +62,7 @@ export default function Home() {
         <input className='mx-2 mb-2' type="text" value={inputValue} onChange={handleInputChange} />
       </div>
 
-      {showMasterArtist.map((artist, index) => {
+      {masterArtist.map((artist, index) => {
         return (
           <div className='mx-2 my-1' key={artist.name}>
             <p>
