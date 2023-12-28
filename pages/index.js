@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google'
 import { HelloWorld } from '../components/HelloWorld'
 import { Link } from 'next/link'
 import React from 'react'
-import { useState } from "react";
+import { useState } from "react"
 
 export default function Home() {
   const masterArtist = [
@@ -17,23 +17,23 @@ export default function Home() {
     { name: 'シューベルト', era: 'Classical' },
   ];
 
-  const [showmasterArtist, setmasterArtist] = React.useState(masterArtist);
+  const [showMasterArtist, setMasterArtist] = React.useState(masterArtist);
   const [inputValue, setInputValue] = useState();
 
   const eras = Array.from(new Set(masterArtist.map((artist) => artist.era)));
 
-  const selectera = (era) => {
+  const selectEra = (era) => {
     if (era === "all") {
-      setmasterArtist(masterArtist);
+      setMasterArtist(masterArtist);
     } else {
-      const selectedmasterArtist = masterArtist.filter((artist) => artist.era === era);
-      setmasterArtist(selectedmasterArtist);
+      const selectedMasterArtist = masterArtist.filter((artist) => artist.era === era);
+      setMasterArtist(selectedMasterArtist);
     }
   };
 
   const search = (value) => {
     if (value !== "") {
-      const serchedmasterArtist = masterArtist.filter(
+      const serchedMasterArtist = masterArtist.filter(
         (artist) =>
           Object.values(artist).filter(
             (item) =>
@@ -42,11 +42,11 @@ export default function Home() {
               item.toUpperCase().indexOf(value.toUpperCase()) !== -1
           ).length > 0
       );
-      setmasterArtist(serchedmasterArtist);
+      setMasterArtist(serchedMasterArtist);
       return;
     }
 
-    setmasterArtist(masterArtist);
+    setMasterArtist(masterArtist);
     return;
   };
 
@@ -59,23 +59,20 @@ export default function Home() {
     <div className="Home">
       <h1 className='text-lg mt-2 mx-2 font-medium'>クラシック作曲家の時代別検索</h1>
 
-      { }
       <div>
         <h2 className='my-2 mx-2'>時代区分(era)</h2>
-        <button className='border-2 rounded px-2 py-1 mx-2 hover:bg-blue-200 border-red-400' onClick={() => selectera("all")}>All</button>
+        <button className='border-2 rounded px-2 py-1 mx-2 hover:bg-blue-200 border-red-400' onClick={() => selectEra("all")}>All</button>
         {eras.map((era) => (
-          <button key={era} className='border-2 rounded px-2 py-1 mx-1 hover:bg-blue-200 border-teal-400' onClick={() => selectera(era)}>{era}</button>
+          <button key={era} className='border-2 rounded px-2 py-1 mx-1 hover:bg-blue-200 border-teal-400' onClick={() => selectEra(era)}>{era}</button>
         ))}
       </div>
 
-      { }
       <div>
         <h4 className='my-2 mx-2'>Search</h4>
         <input className='mx-2 mb-2' type="text" value={inputValue} onChange={handleInputChange} />
       </div>
 
-      { }
-      {showmasterArtist.map((artist, index) => {
+      {showMasterArtist.map((artist, index) => {
         return (
           <div className='mx-2 my-1' key={artist.name}>
             <p>
